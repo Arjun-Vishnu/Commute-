@@ -1,62 +1,56 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const passport = require('passport');
-const User = require('../models/login');
-const jwt = require('jsonwebtoken');
-const pass =require('../middleware/passport')
+const passport = require("passport");
+const User = require("../models/login");
+const jwt = require("jsonwebtoken");
+const authentcate = require("../middleware/passport");
 
-
-router.post('/logout', (req, res) => {
-  res.json({ message: 'Logout successful.' });
+router.get("/logout", authentcate, (req, res) => {
+  // res.clearCookie("jwt");
+  res.json({ message: "Logout successful." });
 });
+
 router.post("/signup", (req, res) => {
   let user = new User({
     username: req.body.username,
     password: req.body.password,
   });
-  console.log(user)
+  console.log(user);
 
-  user.save()
+  user
+    .save()
     .then((signup) => {
       // console.log(signup)
-      res.json({ message: 'Signup successful' });
+      res.json({ message: "Signup successful" });
     })
     .catch((error) => {
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: "Internal server error" });
     });
 });
-router.post('/login', function(req, res) {
+router.post("/login", function (req, res) {
   const { username, password } = req.body;
-  
+
   User.findOne({ username: username, password: password })
     .then((user) => {
       // console.log(user)
       if (user) {
-        const token = jwt.sign({ username: user.username }, 'pass_key');
-        res.json({ "Bearer": token });
+        const token = jwt.sign({ username: user.username }, "secret_key");
 
-      
+        // setting the token on cookie so that passport can access it later
+        // res.cookie("jwt", token, { httpOnly: true });
+        res.json({ Bearer: token });
       } else {
-        res.status(401).json({ message: 'Invalid login credentials' });
+        res.status(401).json({ message: "Invalid login credentials" });
       }
     })
     .catch((error) => {
       console.log(error); // Check the error in the server logs
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: "Internal server error" });
     });
 });
-router.post('/logout', (req, res) => {
-  res.clearCookie('jwt');
-  res.json({ message: 'Logout successful' });
-});
-router.post(
-  '/profile',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    
-    res.send(req.user.profile);
-  }
-);
 
+router.post("/profile", authentcate, (req, res) => {
+  res.json({ usernme: req.user.username });
+});
 
 module.exports = router;
