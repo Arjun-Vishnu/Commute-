@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const authentcate = require("../middleware/passport");
 
 router.get("/logout", authentcate, (req, res) => {
-  // res.clearCookie("jwt");
+  res.clearCookie("jwt");
   res.json({ message: "Logout successful." });
 });
 
@@ -50,7 +50,8 @@ router.post("/login", function (req, res) {
 });
 
 router.post("/profile", authentcate, (req, res) => {
-  res.json({ usernme: req.user.username });
+      res.json({ usernme: req.user.username });
+
 });
 
 module.exports = router;

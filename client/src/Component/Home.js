@@ -20,15 +20,20 @@ function Logout() {
   };
 
   return (
-    <div className="App d-flex align-items-center justify-content-center">
-       <h1>Welcome to the tummoc </h1>
-      <img
-        src="https://example.com/image.jpg" // Replace with your image URL
-        alt="Home Image"
-      />  
-      {isTokenExpired && <div className="message">Token has expired.</div>}
-      <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
-    </div>
+    <div className="App d-flex flex-column align-items-center mt-5">
+  <h1 className="text-center mt-5">Welcome to <span className="text-danger">tummoc</span></h1>
+  <div>
+    <img
+      src="https://media3.giphy.com/media/aaszVoRVoVK8y2Nq1B/200w.gif" 
+      alt="Home Image"
+      width="300px"
+      height="300px"
+    />
+  </div>
+  {isTokenExpired && <div className="message">Token has expired.</div>}
+  <button className="btn btn-danger ms-4" onClick={handleLogout}>Logout</button>
+</div>
+
   );
 }
 

@@ -25,7 +25,7 @@ function Login() {
           username: username,
         };
         dispatch(setUser(user));
-        navigate('/logout');
+        navigate('/home');
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.message) {
@@ -38,7 +38,13 @@ function Login() {
 
   const handleLoginSuccess = (credentialResponse) => {
     console.log(credentialResponse);
-    // Handle successful login
+    const token = credentialResponse.credantial; 
+  
+    // Save the token to local storage
+    localStorage.setItem('token', token);
+  
+    navigate('/home');
+   
   };
 
   const handleLoginError = () => {
