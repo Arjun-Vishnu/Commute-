@@ -3,10 +3,10 @@ var router = express.Router();
 const passport = require("passport");
 const User = require("../models/login");
 const jwt = require("jsonwebtoken");
-const authentcate = require("../middleware/passport");
+const authentcate = require("../middleware/passport")
 
-router.get("/logout", authentcate, (req, res) => {
-  res.clearCookie("jwt");
+router.post("/logout", authentcate,(req, res) => {
+  // res.clearCookie("jwt");
   res.json({ message: "Logout successful." });
 });
 
@@ -35,8 +35,6 @@ router.post("/login", function (req, res) {
       // console.log(user)
       if (user) {
         const token = jwt.sign({ username: user.username }, "secret_key");
-
-        // setting the token on cookie so that passport can access it later
         // res.cookie("jwt", token, { httpOnly: true });
         res.json({ Bearer: token });
       } else {
@@ -44,7 +42,7 @@ router.post("/login", function (req, res) {
       }
     })
     .catch((error) => {
-      console.log(error); // Check the error in the server logs
+      console.log(error); 
       res.status(500).json({ error: "Internal server error" });
     });
 });

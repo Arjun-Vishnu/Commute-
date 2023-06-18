@@ -21,9 +21,12 @@ function Login() {
       .then((response) => {
         console.log(response.data);
         setErrorMessage('');
+        const token = response.data.Bearer;
         var user = {
           username: username,
+          token: token
         };
+        localStorage.setItem('token', token);
         dispatch(setUser(user));
         navigate('/home');
       })
