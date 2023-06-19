@@ -20,7 +20,6 @@ db.once('open', function(){
 
 var fileRouter = require('./routes/fileProcessor');
 var loginRouter = require('./routes/login');
-var authRouter = require('./routes/auth');
 var userRouter = require('./routes/user');
 
 var app = express();
@@ -40,7 +39,6 @@ app.use(cors({
 
 app.use('/', fileRouter);
 app.use('/users', loginRouter);
-app.use('/auth', authRouter);
 app.use('/schema', userRouter);
 
 // catch 404 and forward to error handler

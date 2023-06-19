@@ -10,7 +10,7 @@ function Logout() {
   const navigate = useNavigate();
   const [isTokenExpired, setIsTokenExpired] = useState(false);
 
-  const handleLogout = async () => {
+  const handleLocalLogout = async () => {
     if (user) {
       try {
         await axios.post(
@@ -23,8 +23,27 @@ function Logout() {
         dispatch(clearUser());
         navigate('/');
       } catch (error) {
-        console.error('Error during logout:', error.message);
+        console.error('Error during local logout:', error.message);
       }
+    }
+  };
+
+  const handleGoogleLogout = async () => {
+    try {
+      // Send a request to your server to revoke the user's token
+      await axios.post('http://localhost:3000/users/google/logout');
+    } catch (error) {
+      console.error('Error during Google logout:', error.message);
+    }
+    dispatch(clearUser());
+  };
+
+  const handleLogout = async () => {
+    if (user && user.isGoogleAuthenticated) {
+      handleGoogleLogout();
+    } else {
+      handleLocalLogout();
+      window.location.href = '/';
     }
   };
 
@@ -43,7 +62,7 @@ function Logout() {
       </div>
       {isTokenExpired && <div className="message">Token has expired.</div>}
       <button className="btn btn-danger ms-4" onClick={handleLogout}>
-        Logout
+        {user && user.isGoogleAuthenticated ? 'Google Logout' : 'Logout'}
       </button>
     </div>
   );

@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUser } from './store/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin, GoogleOAuthProvider, googleLogout } from '@react-oauth/google';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -41,13 +42,13 @@ function Login() {
 
   const handleLoginSuccess = (credentialResponse) => {
     console.log(credentialResponse);
-    const token = credentialResponse.credantial; 
-  
+    const token = credentialResponse.credantial;
+
     // Save the token to local storage
     localStorage.setItem('token', token);
-  
+
     navigate('/home');
-   
+
   };
 
   const handleLoginError = () => {
@@ -56,8 +57,11 @@ function Login() {
   };
 
   const handleLogout = () => {
-    googleLogout();
-    // Handle logout
+    // Clear user data and perform logout actions
+    localStorage.removeItem('token');
+    // Update state or perform any other necessary actions
+    // Redirect to the login page or home page
+    window.location.href = '/'; // Assuming '/login' is the route for the login page
   };
 
   return (
@@ -137,6 +141,8 @@ function Login() {
                   className="btn btn-danger"
                 />
               </GoogleOAuthProvider>
+    
+             
             </form>
           </div>
         </div>

@@ -3,9 +3,10 @@ var router = express.Router();
 const passport = require("passport");
 const User = require("../models/login");
 const jwt = require("jsonwebtoken");
-const authentcate = require("../middleware/passport")
+const authentcate = require("../middleware/passport");
+const tokenVerify =require("../middleware/gauth")
 
-router.post("/logout", authentcate,(req, res) => {
+router.post("/logout",authentcate ,(req, res) => {
   // res.clearCookie("jwt");
   res.json({ message: "Logout successful." });
 });
