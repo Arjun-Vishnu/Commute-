@@ -59,8 +59,8 @@
     </ul>
   </li>
   <li>Configure the necessary environment variables (e.g., MongoDB connection string, Google OAuth credentials).</li>
-  <li>Start the backend server: <code>cd backend && npm start or nodemon</code></li>
-  <li>Start the frontend development server: <code>cd frontend && npm start</code></li>
+  <li>Start the backend server: <code>cd server && npm start or nodemon</code></li>
+  <li>Start the frontend development server: <code>cd client && npm start</code></li>
   <li>Access the application in your browser at <a href="http://localhost:3000">http://localhost:3000</a>.</li>
    <li>if you run both server and client change client to <a href="http://localhost:3001">http://localhost:3001</a>.</li>
 </ol>
